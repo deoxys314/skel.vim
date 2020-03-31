@@ -1,0 +1,77 @@
+*skel.vim.txt*	Template file functionality for Vim 	Last Change: 2020-03-31
+
+==============================================================================
+CONTENTS                                                       *skel-contents*
+
+    1. Overview ................... |skel-overview|
+    2. Template Files ............. |skel-template-files|
+    3. Options .................... |skel-options|
+    4. Commands ................... |skel-commands|
+    5. Autocmds ................... |skel-autocmds|
+    6. About ...................... |skel-about|
+
+
+==============================================================================
+OVERVIEW                                                       *skel-overview*
+
+skel.vim is a small and simple plugin for populating new buffers with
+user-provided skeleton files. I originally called it a one-page plugin, but
+it's grown slightly past that since I refined some functions.
+
+skel.vim provides one command, |:LoadSkeleton|, and loads one autocmd. There
+is only one option, to set the verbosity of the script. What templates are
+loaded should be set depending on the order of the 'runtimepath'.
+
+A comment on naming: The original concept was `skeleton.vim`, but the plugin
+ended up being so bare-bones, it was shortened!
+
+
+==============================================================================
+TEMPLATE FILES                                           *skel-tempalte-files*
+
+skel.vim looks for files with the glob   `templates/*.skel` extension in your
+'runtimepath'. Files should be named according to the 'filetype', e.g. text
+file skseltons are in a file called `txt.skel`.
+
+
+==============================================================================
+OPTIONS                                                         *skel-options*
+
+g:skel_verbose                                                *g:skel_verbose*
+
+  Type: |Number|
+  Default: `0`
+
+  Enables some extra messaging. The author recommends only using it for
+  debugging purposes, as the additional messages tend to cause more friction
+  creating buffers due to extra |hit-enter| prompts.
+
+
+==============================================================================
+COMMANDS                                                           *skel-cmds*
+
+                                                          *skel-:LoadSkeleton*
+:LoadSkeleton[!] {template}  With no {template}, will try to load a template
+                             file matching the 'filetype' of the current
+                             buffer. With {template}, will load specified
+                             template file. This command supports
+                             autocompletion. A bang will force the reading of
+                             a template file even if the buffer is non-empty.
+
+
+==============================================================================
+AUTOCMDS                                                       *skel-autocmds*
+
+skel.vim creates one augroup , titled `skel`, which has one call to the buffer
+population function on the |BufNewFile| event. This version of the command
+will never be forced, if that is desired, use |:LoadSkeleton| with a bang.
+
+
+==============================================================================
+ABOUT                                                             *skel-about*
+
+skel.vim is maintained by Cameron Rossington, and lives here:
+
+http://github.com/deoxys314/skel.vim
+
+ vim:tw=78:et:ft=help:norl:
