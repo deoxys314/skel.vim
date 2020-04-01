@@ -18,9 +18,9 @@ skel.vim is a small and simple plugin for populating new buffers with
 user-provided skeleton files. I originally called it a one-page plugin, but
 it's grown slightly past that since I refined some functions.
 
-skel.vim provides one command, |:LoadSkeleton|, and loads one autocmd. There
-is only one option, to set the verbosity of the script. What templates are
-loaded should be set depending on the order of the 'runtimepath'.
+skel.vim provides one command, |:SkelLoad|, and loads one autocmd. There is
+only one option, to set the verbosity of the script. What templates are loaded
+should be set depending on the order of the 'runtimepath'.
 
 A comment on naming: The original concept was `skeleton.vim`, but the plugin
 ended up being so bare-bones, it was shortened!
@@ -31,7 +31,7 @@ TEMPLATE FILES                                           *skel-template-files*
 
 skel.vim looks for files with the glob   `templates/*.skel` extension in your
 'runtimepath'. Files should be named according to the 'filetype', e.g. text
-file skseltons are in a file called `txt.skel`.
+file skeletons are in a file called `txt.skel`.
 
 
 ==============================================================================
@@ -50,8 +50,8 @@ g:skel_verbose                                                *g:skel_verbose*
 ==============================================================================
 COMMANDS                                                           *skel-cmds*
 
-                                                          *skel-:LoadSkeleton*
-:LoadSkeleton[!] {template}  With no {template}, will try to load a template
+                                                              *skel-:SkelLoad*
+:SkelLoad[!] {template}      With no {template}, will try to load a template
                              file matching the 'filetype' of the current
                              buffer. With {template}, will load specified
                              template file. This command supports
@@ -64,7 +64,7 @@ AUTOCMDS                                                       *skel-autocmds*
 
 skel.vim creates one augroup , titled `skel`, which has one call to the buffer
 population function on the |BufNewFile| event. This version of the command
-will never be forced, if that is desired, use |:LoadSkeleton| with a bang.
+will never be forced, if that is desired, use |:SkelLoad| with a bang.
 
 
 ==============================================================================

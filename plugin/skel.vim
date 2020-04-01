@@ -1,6 +1,6 @@
 " skel.vim - simple file template support
 " Maintainer: Cameron Rossington
-" Version:    0.1
+" Version:    0.2
 
 if exists('g:loaded_skel')
 	finish
@@ -13,7 +13,7 @@ let g:skel_verbose = get(g:, 'skel_verbose', 0)
 
 command! -nargs=? -bang -bar
 		\ -complete=customlist,skel#list_files
-		\ LoadSkeleton call skel#load_type(<q-args>, <bang>0)
+		\ SkelLoad call skel#load_type(<q-args>, <bang>0)
 
 " }}}
 
