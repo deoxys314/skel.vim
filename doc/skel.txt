@@ -22,6 +22,17 @@ skel.vim provides one command, |:SkelLoad|, and loads one autocmd. There is
 only one option, to set the verbosity of the script. What templates are loaded
 should be set depending on the order of the 'runtimepath'.
 
+The heavy lifting for the plugin is done by |skel-autocmds|, but the same
+basic functionality also underlays the ex command. When invoked, either by
+entering a new empty buffer or via command, skel.vim will use 'filetype' (or
+the user provided string) to determine what template file to look for. E.g.,
+a 'filetype' set to python means that a `python.skel` file is looked for.
+Then, the 'runtimepath' is searched in reverse order, and the first template
+file found with the glob `templates/*.skel` is copied into the buffer.
+
+skel.vim thus respects the user's `after/` folder so if some plugin or
+administrator has set up template files, the user can override them.
+
 A comment on naming: The original concept was `skeleton.vim`, but the plugin
 ended up being so bare-bones, it was shortened!
 
@@ -68,6 +79,11 @@ AUTOCMDS                                                       *skel-autocmds*
 skel.vim creates one augroup , titled `skel`, which has one call to the buffer
 population function on the |BufNewFile| event. This version of the command
 will never be forced, if that is desired, use |:SkelLoad| with a bang.
+
+This autocmd is the most core part of skel.vim's operation. Every time a new
+buffer is created, skel.vim will look through the available template files to
+see if any match the 'filetype', and loaded if found. For more details, see
+|skel-overview|.
 
 
 ==============================================================================
