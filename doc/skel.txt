@@ -18,9 +18,10 @@ skel.vim is a small and simple plugin for populating new buffers with
 user-provided skeleton files. I originally called it a one-page plugin, but
 it's grown slightly past that since I refined some functions.
 
-skel.vim provides one command, |:SkelLoad|, and loads one autocmd. There is
-only one option, to set the verbosity of the script. What templates are loaded
-should be set depending on the order of the 'runtimepath'.
+skel.vim provides one command, |:SkelLoad|, and loads one autocmd. There are
+only two options, one of which only sets the verbosity of the script. What
+templates are loaded should be set depending on the order of the
+'runtimepath'.
 
 The heavy lifting for the plugin is done by |skel-autocmds|, but the same
 basic functionality also underlays the ex command. When invoked, either by
@@ -44,13 +45,18 @@ skel.vim looks for files with the glob `templates/*.skel` extension in your
 'runtimepath'. Files should be named according to the 'filetype', e.g. text
 file skeletons are in a file called `text.skel`.
 
+No interpretation of template files is done, aside from the |g:skel_sigil|
+which may optionally be included in template files to place the cursor in
+a specific location after loading. The sigil itself will be removed. If no
+sigil is provided, the cursor will go at the end of the buffer.
+
 An example template file for python is below:
 
 >
 	#!/usr/bin/env python3
 
 	def main(args):
-	    pass
+		@@ # <- cursor will go here, even leaving the comment intact!
 
 	if __name__ == "__main__":
 		import sys
@@ -64,6 +70,22 @@ OPTIONS                                                         *skel-options*
 
 If the user changes any of the variables used by skel.vim, the change will
 take effect immediately, meaning that the plugin does not have to be reloaded.
+
+g:skel_sigil                                                    *g:skel_sigil*
+
+  Type: |String|
+  Default: `'@@'`
+
+  This is an sigil that can optionally be placed in your template files to
+  indicate where the cursor should start. When a template is loaded, the first
+  instance of this string will be removed and the cursor will be placed where
+  it was. For an example usage, see the python template file shown in
+  |skel-template-files|.
+
+  The string `'@@'` was choosen as it is used very rarely in programming
+  languages. If you change this from its default value, be wary of escape
+  sequences - skel.vim does not escape this before using it as a search
+  pattern, which may lead to unexpected results.
 
 g:skel_verbose                                                *g:skel_verbose*
 

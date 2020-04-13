@@ -1,6 +1,6 @@
 " skel.vim - simple file template support
 " Maintainer: Cameron Rossington
-" Version:    0.2
+" Version:    0.3
 
 if exists('g:loaded_skel')
 	finish

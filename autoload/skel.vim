@@ -40,6 +40,24 @@ function! s:log(message) abort
 	endif
 endfunction
 
+function! s:place_cursor() abort
+	" if we can find the sigil '@@', delete it, and move the cursor to where
+	" it was. Otherwise, we go to the end of the file
+	let l:sigil = get(g:, 'skel_sigil', '@@')
+	" search flags: n: don't move cursor, W: no wrap around end of file
+	let [l:line, l:col] = searchpos(l:sigil, 'nW')
+	if l:line == 0
+		" move to end of file and be done
+		call cursor(line('$'), col([line('$'), '$']))
+		return
+	else
+		" now we can move to the sigil, delete it and be done
+		call setline(l:line, substitute(getline(l:line), l:sigil, '', ''))
+		call cursor(l:line, l:col)
+		return
+	endif
+endfunction
+
 " }}}
 
 " Section: Public Functions {{{
@@ -79,6 +97,7 @@ function! skel#load_type(type, bang) abort
 			if s:buffer_empty() || a:bang
 				call s:log('Populating buffer with a ' . a:type . ' skeleton.')
 				execute ':silent! 0r ' . template
+				call s:place_cursor()
 			else
 				echoerr 'Cannot populate a non-empty buffer!'
 			endif
