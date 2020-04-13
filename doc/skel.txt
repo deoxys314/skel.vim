@@ -29,9 +29,9 @@ ended up being so bare-bones, it was shortened!
 ==============================================================================
 TEMPLATE FILES                                           *skel-template-files*
 
-skel.vim looks for files with the glob   `templates/*.skel` extension in your
+skel.vim looks for files with the glob `templates/*.skel` extension in your
 'runtimepath'. Files should be named according to the 'filetype', e.g. text
-file skeletons are in a file called `txt.skel`.
+file skeletons are in a file called `text.skel`.
 
 
 ==============================================================================
