@@ -58,10 +58,9 @@ function! skel#list_files(arglead, cmdline, cursorpos) abort
 	" (:t (tail) for filename, :r (root) to drop the extension.
 	" Extension will always be '.skel' because of the blob used
 	" in s:get_templates()
-	return uniq(sort(
-			\ filter(
+	return uniq(sort(filter(
 				\ map(s:get_templates(), 'fnamemodify(v:val, ":t:r")'),
-			\ 'v:val =~? a:arglead')))
+						\ 'v:val =~? a:arglead')))
 endfunction
 
 " PUBLIC: Custom Command
