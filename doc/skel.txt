@@ -44,6 +44,20 @@ skel.vim looks for files with the glob `templates/*.skel` extension in your
 'runtimepath'. Files should be named according to the 'filetype', e.g. text
 file skeletons are in a file called `text.skel`.
 
+An example template file for python is below:
+
+>
+	#!/usr/bin/env python3
+
+	def main(args):
+	    pass
+
+	if __name__ == "__main__":
+		import sys
+		main(sys.argv)
+<
+Place in ~/vimfiles/templates/python.skel
+
 
 ==============================================================================
 OPTIONS                                                         *skel-options*
