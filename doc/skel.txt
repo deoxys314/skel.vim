@@ -37,6 +37,9 @@ file skeletons are in a file called `text.skel`.
 ==============================================================================
 OPTIONS                                                         *skel-options*
 
+If the user changes any of the variables used by skel.vim, the change will
+take effect immediately, meaning that the plugin does not have to be reloaded.
+
 g:skel_verbose                                                *g:skel_verbose*
 
   Type: |Number|

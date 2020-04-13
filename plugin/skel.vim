@@ -7,8 +7,6 @@ if exists('g:loaded_skel')
 endif
 let g:loaded_skel = 1
 
-let g:skel_verbose = get(g:, 'skel_verbose', 0)
-
 " Section: Commands {{{
 
 command! -nargs=? -bang -bar

@@ -35,7 +35,7 @@ endfunction
 function! s:log(message) abort
 	" If plugin is in verbose mode, log a message. Otherwise, do
 	" nothing.
-	if g:skel_verbose
+	if get(g:, 'skel_verbose', 0)
 		echomsg l:message
 	endif
 endfunction
