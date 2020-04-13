@@ -47,7 +47,8 @@ endfunction
 " PUBLIC: Autocmd
 function! skel#populate_buffer() abort
 	" simple wrapper for the autocmd. Will never call with bang,
-	" as that could potentially cause unexpected behavior
+	" as that could potentially cause unexpected or undesired
+	" behavior
 	call skel#load_type(&filetype, 0)
 endfunction
 
