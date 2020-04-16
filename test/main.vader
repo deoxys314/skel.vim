@@ -1,0 +1,122 @@
+# {{{ Setup
+
+# Before running each test, add the set of testing templates to the
+# runtimepath
+Before (Setup runtimepath):
+  let &rtp .= ',' . fnamemodify(g:vader_file, ':p:h')
+
+# {{{2 Notes
+# Notes on testing:
+#   The core function being tested is skel#load_type()
+#   It can be called via Ex command or autocmd,
+#     with or without bang (forcing),
+#     with or without a filetype provided,
+#     in an empty or non empty buffer,
+#     and the template may have a sigil or not
+#
+#   While I could run a full battery of 32 tests, most of these are orthagonal
+#   concerns (and some are not possible, e.g. invoking via autocmd with a
+#   bang).
+#
+# }}}2
+# }}}
+
+# {{{ Tests
+
+# {{{2 Invoke via autocmd
+
+Given test (An empty buffer):
+
+Execute (Synthetic BufNewFile event):
+  do skel BufNewFile
+
+Expect (Template text should be loaded):
+  Template Text
+  Over Multiple Lines
+  
+
+# }}}2
+
+# {{{2 Invoke via Ex command
+
+Given test (An empty buffer):
+
+Execute (Call SkelLoad):
+  SkelLoad
+
+Expect (Template text should be loaded):
+  Template Text
+  Over Multiple Lines
+  
+
+# }}}2
+
+# {{{2 Call with bang, empty buffer
+
+Given test (An empty buffer):
+
+Execute (Call SkelLoad!):
+  SkelLoad!
+
+Expect (Template text should be loaded):
+  Template Text
+  Over Multiple Lines
+  
+# }}}2
+
+# {{{2 Call with bang, non-empty buffer
+
+Given test (A non-empty buffer):
+  Some Text
+
+Execute (Call SkelLoad!):
+  SkelLoad!
+
+Expect (Template text should be loaded before existing text):
+  Template Text
+  Over Multiple Lines
+  Some Text
+
+# }}}2
+
+# {{{2 Call without bang, non-empty buffer
+
+Given test (A non-empty buffer):
+  Some Text
+
+Execute (An error message should be echoed):
+  AssertThrows SkelLoad
+
+Expect (Text in buffer should be unchanged):
+  Some Text
+
+# }}}2
+
+# {{{2 Invoke with filetype explicitly provided
+
+Given not_test (A buffer with a different filetype):
+
+Execute (Call SkelLoad test):
+  SkelLoad test
+
+Expect (Test template should be loaded):
+  Template Text
+  Over Multiple Lines
+  
+
+# }}}2
+
+# {{{2 Invoke with sigil
+
+Given test_sigil (An empty buffer):
+
+Execute (Call SkelLoad):
+  SkelLoad
+
+Then (Cursor should be where sigil was):
+  AssertEqual getcurpos()[1], 2, 'Cursor should be on line 2'
+  AssertEqual getcurpos()[2], 17, 'Cursor should be on column 17'
+
+# }}}2
+
+# }}}
